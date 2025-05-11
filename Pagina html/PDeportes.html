@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GolESPE 360 - La Liga Española</title>
+    <style>
+        :root {
+            --color-primario: #1a3c8a;
+            --color-secundario: #e63946;
+            --color-fondo: #f8f9fa;
+            --color-texto: #212529;
+            --color-claro: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+        }
+        
+        header {
+            background-color: var(--color-primario);
+            color: var(--color-claro);
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .header-img {
+            max-height: 80px;
+            border-radius: 8px;
+        }
+        
+        nav {
+            background-color: #002867;
+            padding: 0.5rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        section {
+            margin-bottom: 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: var(--color-primario);
+            margin-bottom: 1rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        th, td {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--color-primario);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #ddd;
+        }
+        
+        .zona-champions {
+            background-color: rgba(0, 128, 0, 0.2);
+        }
+        
+        .zona-europa {
+            background-color: rgba(0, 0, 255, 0.1);
+        }
+        
+        .partido {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .partido:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .fecha {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+     .servicios {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    .servicios {
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto;
+    }
+}
+        
+        .servicio {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .servicio h3 {
+            color: var(--color-secundario);
+        }
+        
+        .servicio ul {
+            margin-left: 1.5rem;
+        }
+        
+        .foro {
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            background-color: white;
+        }
+        
+        .comentario {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comentario-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .usuario {
+            font-weight: bold;
+            color: var(--color-primario);
+        }
+        
+        .responder {
+            margin-top: 1rem;
+        }
+        
+        .responder textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .responder button {
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .simulador-apuestas {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .cuotas {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .cuota {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            text-align: center;
+            width: 32%;
+        }
+        
+        .valor {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-secundario);
+            margin: 5px 0;
+        }
+        
+        .seleccionar-cuota {
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            width: 100%;
+        }
+        
+        .calculo-apuesta {
+            margin-top: 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+        
+        .calculo-apuesta input {
+            margin: 5px 0;
+            padding: 5px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .btn-apostar {
+            background-color: var(--color-secundario);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--color-primario);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .jornadas {
+          margin-bottom: 1.5rem;
+        }
+
+        .jornada-titulo {
+          background-color: var(--color-primario);
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          margin-bottom: 0.5rem;
+        }
+
+     .partidos-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+        
+        .partido-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+      
+        
+        .partido-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .partido-fecha {
+            font-weight: bold;
+            color: var(--color-secundario);
+        }
+        
+        .partido-jornada {
+            font-size: 0.8rem;
+            color: #666;
+            background-color: #f2f2f2;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        
+        .partido-equipos {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0.8rem 0;
+            text-align: center;
+            color: var(--color-primario);
+            line-height: 1.3;
+        }
+        
+        .partido-hora {
+            text-align: center;
+            background-color: #f5f5f5;
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+
+
+        .destacado-img {
+          width: 40%;
+          height: auto;
+          border-radius: 8px;
+          margin: 1rem 0;
+          display: block;
+        }
+
+        .clasico-banner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: rgb(53, 53, 117);
+          padding: 1rem;
+          border-radius: 8px;
+          margin: 1rem 0;
+          color: white;
+        }
+
+        .clasico-info {
+          flex: 1;
+        }
+
+        .clasico-img {
+          max-width: 40%;
+          border-radius: 8px;
+          margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GolESPE 360</div>
+        <img src="foto1.png" alt="Fútbol Español" class="header-img" title="foto1">
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#clasificacion">Clasificación</a></li>
+            <li><a href="#proximos-partidos">Próximos Partidos</a></li>
+            <li><a href="#foros">Foros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="clasificacion">
+            <h2>Clasificación de La Liga</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Equipo</th>
+                        <th>PTS</th>
+                        <th>PJ</th>
+                        <th>G</th>
+                        <th>E</th>
+                        <th>P</th>
+                        <th>GF</th>
+                        <th>GC</th>
+                        <th>DG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="zona-champions">
+                        <td>1</td>
+                        <td>FC Barcelona</td>
+                        <td>76</td>
+                        <td>33</td>
+                        <td>24</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>89</td>
+                        <td>32</td>
+                        <td>57</td>
+                    </tr>
+                    <tr class="zona-champions">
+                        <td>2</td>
+                        <td>Real Madrid CF</td>
+                        <td>72</td>
+                        <td>33</td>
+                        <td>22</td>
+                        <td>6</td>
+                        <td>5</td>
+                        <td>66</td>
+                        <td>31</td>
+                        <td>35</td>
+                    </tr>
+                    <tr class="zona-champions">
+                        <td>3</td>
+                        <td>Atlético Madrid</td>
+                        <td>66</td>
+                        <td>33</td>
+                        <td>19</td>
+                        <td>9</td>
+                        <td>5</td>
+                        <td>56</td>
+                        <td>27</td>
+                        <td>29</td>
+                    </tr>
+                    <tr class="zona-champions">
+                        <td>4</td>
+                        <td>Athletic Bilbao</td>
+                        <td>60</td>
+                        <td>33</td>
+                        <td>16</td>
+                        <td>12</td>
+                        <td>5</td>
+                        <td>50</td>
+                        <td>26</td>
+                        <td>24</td>
+                    </tr>
+                    <tr class="zona-europa">
+                        <td>5</td>
+                        <td>Villarreal CF</td>
+                        <td>55</td>
+                        <td>33</td>
+                        <td>15</td>
+                        <td>10</td>
+                        <td>8</td>
+                        <td>56</td>
+                        <td>45</td>
+                        <td>11</td>
+                    </tr>
+                    <tr class="zona-europa">
+                        <td>6</td>
+                        <td>Real Betis Balompié</td>
+                        <td>54</td>
+                        <td>33</td>
+                        <td>15</td>
+                        <td>9</td>
+                        <td>9</td>
+                        <td>50</td>
+                        <td>41</td>
+                        <td>9</td>
+                    </tr>
+                    <tr class="zona-europa">
+                        <td>7</td>
+                        <td>RC Celta de Vigo</td>
+                        <td>46</td>
+                        <td>33</td>
+                        <td>13</td>
+                        <td>7</td>
+                        <td>13</td>
+                        <td>49</td>
+                        <td>49</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="leyenda">
+                <p><span style="display: inline-block; width: 20px; height: 10px; background-color: rgba(0, 128, 0, 0.2);"></span> Zona Champions League</p>
+                <p><span style="display: inline-block; width: 20px; height: 10px; background-color: rgba(0, 0, 255, 0.1);"></span> Zona Europa League/Conference</p>
+            </div>
+            <p><a href="#" class="ver-mas">Ver tabla completa</a></p>
+        </section>
+        
+        <!-- Banner del Clásico con imagen -->
+        <div class="clasico-banner">
+            <div class="clasico-info">
+                <h3 style="color: white;">¡PRÓXIMO CLÁSICO!</h3>
+                <h4 style="color: white;">FC Barcelona vs Real Madrid CF</h4>
+                <p>Sábado, 10 de mayo - 9:15</p>
+            </div>
+            <img src="foto2.jpg" alt="El Clásico" class="clasico-img" title="foto2">
+        </div>
+       
+         <section id="proximos-partidos">
+        <h2>Próximos Partidos</h2>
+        
+        <!-- Semana 34 -->
+        <div class="jornadas">
+            <h3 class="jornada-titulo">Semana 34</h3>
+            
+            <h4>Mañana, 3 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Mañana</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Deportivo Alavés vs Atlético Madrid</div>
+                    <div class="partido-hora">7:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Mañana</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Villarreal CF vs CA Osasuna</div>
+                    <div class="partido-hora">9:15</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Mañana</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Las Palmas vs Valencia CF</div>
+                    <div class="partido-hora">11:30</div>
+                </div>
+                
+                <div class="partido-card" style="grid-column: 1 / span 3;">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Mañana</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Real Valladolid vs FC Barcelona</div>
+                    <div class="partido-hora">14:00</div>
+                </div>
+            </div>
+            
+            <h4>Domingo, 4 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Domingo</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Real Madrid CF vs RC Celta de Vigo</div>
+                    <div class="partido-hora">7:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Domingo</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Sevilla FC vs CD Leganés</div>
+                    <div class="partido-hora">9:15</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Domingo</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">RCD Espanyol Barcelona vs Real Betis Balompié</div>
+                    <div class="partido-hora">11:30</div>
+                </div>
+                
+                <div class="partido-card partido-especial" style="grid-column: 1 / span 2;">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Domingo</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Real Sociedad vs Athletic Bilbao</div>
+                    <div class="partido-hora">14:00</div>
+                </div>
+            </div>
+            
+            <h4>Lunes, 5 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Lunes</span>
+                        <span class="partido-jornada">Jornada 34</span>
+                    </div>
+                    <div class="partido-equipos">Girona FC vs RCD Mallorca</div>
+                    <div class="partido-hora">14:00</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Imagen destacada entre jornadas -->
+        <div class="destacado-container">
+            <img src="foto3.jpg" alt="Estadio de fútbol" class="destacado-img">
+        </div>
+        
+        <!-- Semana 35 -->
+        <div class="jornadas">
+            <h3 class="jornada-titulo">Semana 35</h3>
+            
+            <h4>Sábado, 10 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Sábado</span>
+                        <span class="partido-jornada">Jornada 35</span>
+                    </div>
+                    <div class="partido-equipos">CD Leganés vs RCD Espanyol Barcelona</div>
+                    <div class="partido-hora">7:00</div>
+                </div>
+                
+                <div class="partido-card destacado-partido" style="grid-column: 2 / span 2;">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Sábado</span>
+                        <span class="partido-jornada">Jornada 35</span>
+                    </div>
+                    <div class="partido-equipos">FC Barcelona vs Real Madrid CF</div>
+                    <div class="partido-hora">9:15</div>
+                </div>
+                
+                <div class="partido-card" style="grid-column: 1 / span 2; grid-row: 2 / span 1;">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Sábado</span>
+                        <span class="partido-jornada">Jornada 35</span>
+                    </div>
+                    <div class="partido-equipos">Athletic Bilbao vs Deportivo Alavés</div>
+                    <div class="partido-hora">11:30</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Sábado</span>
+                        <span class="partido-jornada">Jornada 35</span>
+                    </div>
+                    <div class="partido-equipos">Real Betis Balompié vs CA Osasuna</div>
+                    <div class="partido-hora">14:00</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Semana 36 -->
+        <div class="jornadas">
+            <h3 class="jornada-titulo">Semana 36</h3>
+            
+            <h4>Martes, 13 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Martes</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Real Valladolid vs Girona FC</div>
+                    <div class="partido-hora">12:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Martes</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Real Sociedad vs RC Celta de Vigo</div>
+                    <div class="partido-hora">13:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Martes</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Sevilla FC vs Las Palmas</div>
+                    <div class="partido-hora">14:30</div>
+                </div>
+            </div>
+            
+            <h4>Miércoles, 14 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card" style="grid-row: 1 / span 2;">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Miércoles</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Villarreal CF vs CD Leganés</div>
+                    <div class="partido-hora">12:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Miércoles</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Deportivo Alavés vs Valencia CF</div>
+                    <div class="partido-hora">12:00</div>
+                </div>
+                
+                <div class="partido-card" style="grid-column: 2 / span 2;">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Miércoles</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Real Madrid CF vs RCD Mallorca</div>
+                    <div class="partido-hora">14:30</div>
+                </div>
+            </div>
+            
+            <h4>Jueves, 15 de mayo</h4>
+            <div class="partidos-grid">
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Jueves</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">Rayo Vallecano vs Real Betis Balompié</div>
+                    <div class="partido-hora">12:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Jueves</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">CA Osasuna vs Atlético Madrid</div>
+                    <div class="partido-hora">12:00</div>
+                </div>
+                
+                <div class="partido-card">
+                    <div class="partido-header">
+                        <span class="partido-fecha">Jueves</span>
+                        <span class="partido-jornada">Jornada 36</span>
+                    </div>
+                    <div class="partido-equipos">RCD Espanyol Barcelona vs FC Barcelona</div>
+                    <div class="partido-hora">14:30</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+        <section id="foros">
+            <h2>Foros de Discusión</h2>
+            
+            <div class="foros-container">
+                <div class="foro">
+                    <h3>El Clásico - Real Madrid vs Barcelona</h3>
+                    <div class="comentarios">
+                        <div class="comentario">
+                            <div class="comentario-header">
+                                <span class="usuario">MadridFan23</span>
+                                <span class="fecha">01/05/2025, 18:45</span>
+                            </div>
+                            <p>¿Alguien cree que el Madrid puede recortar puntos al Barça en estas últimas jornadas? Necesitamos que tropiecen en Valladolid.</p>
+                        </div>
+                        <div class="comentario">
+                            <div class="comentario-header">
+                                <span class="usuario">CuleFiel</span>
+                                <span class="fecha">01/05/2025, 19:03</span>
+                            </div>
+                            <p>Lo veo difícil. El Barça está muy sólido y aún con la ventaja de 4 puntos, no creo que la dejen escapar.</p>
+                        </div>
+                        <div class="comentario">
+                            <div class="comentario-header">
+                                <span class="usuario">Futbolista_Amateur</span>
+                                <span class="fecha">01/05/2025, 19:27</span>
+                            </div>
+                            <p>Yo confío en el Madrid. Siempre saben competir hasta el final y hay varios partidos complicados para el Barça.</p>
+                        </div>
+                    </div>
+                    <div class="responder">
+                        <textarea placeholder="Escribe tu comentario..."></textarea>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+                
+                <div class="foro">
+                    <h3>¿Quién ganará la Champions League?</h3>
+                    <div class="comentarios">
+                        <div class="comentario">
+                            <div class="comentario-header">
+                                <span class="usuario">SoccerExpert</span>
+                                <span class="fecha">30/04/2025, 21:15</span>
+                            </div>
+                            <p>Después de las semifinales, creo que el Bayern Munich es el favorito para levantar la copa.</p>
+                        </div>
+                        <div class="comentario">
+                            <div class="comentario-header">
+                                <span class="usuario">LiverpoolFan</span>
+                                <span class="fecha">30/04/2025, 22:07</span>
+                            </div>
+                            <p>¡Nunca subestimes al Liverpool! Con nuestra afición en el estadio, podemos ganar a cualquiera.</p>
+                        </div>
+                        <div class="comentario">
+                            <div class="comentario-header">
+                                <span class="usuario">TacticoTotal</span>
+                                <span class="fecha">01/05/2025, 09:45</span>
+                            </div>
+                            <p>Si el Manchester City logra pasar, creo que Guardiola por fin conseguirá la Champions que tanto anhela con los Citizens.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        
+        <section id="servicios">
+            <h2>Nuestros Servicios</h2>
+            
+            <div class="servicios">
+                <article class="servicio">
+                    <h3>Información Deportiva</h3>
+                    <ul>
+                        <li><strong>Noticias deportivas actualizadas</strong>
+                            <p>Resultados, transferencias, lesiones, etc.</p>
+                        </li>
+                        <li><strong>Calendario de eventos</strong>
+                            <p>Fechas y horarios de partidos, torneos y competiciones por deporte.</p>
+                        </li>
+                        <li><strong>Estadísticas en tiempo real</strong>
+                            <p>Goles, tarjetas, posesión, tiros al arco, etc.</p>
+                        </li>
+                        <li><strong>Clasificaciones y rankings</strong>
+                            <p>Ligas, torneos, jugadores.</p>
+                        </li>
+                    </ul>
+                </article>
+                
+                <article class="servicio">
+                    <h3>Apuestas Deportivas</h3>
+                    <div class="simulador-apuestas">
+                        <h4>Simulador de Apuestas</h4>
+                        <div class="partido-apuesta">
+                            <p><strong>Real Madrid vs Celta de Vigo</strong></p>
+                            <div class="cuotas">
+                                <div class="cuota">
+                                    <span>Victoria local</span>
+                                    <span class="valor">1.45</span>
+                                    <button class="seleccionar-cuota">Seleccionar</button>
+                                </div>
+                                <div class="cuota">
+                                    <span>Empate</span>
+                                    <span class="valor">4.50</span>
+                                    <button class="seleccionar-cuota">Seleccionar</button>
+                                </div>
+                                <div class="cuota">
+                                    <span>Victoria visitante</span>
+                                    <span class="valor">7.80</span>
+                                    <button class="seleccionar-cuota">Seleccionar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calculo-apuesta">
+                            <label for="cantidad">Cantidad a apostar ($):</label>
+                            <input type="number" id="cantidad" min="1" value="10">
+                            <p>Ganancia potencial: <span id="ganancia">14.50$</span></p>
+                            <button class="btn-apostar">¡Apostar!</button>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><strong>Cuotas actualizadas en tiempo real</strong></li>
+                        <li><strong>Tips y recomendaciones</strong></li>
+                        <li><strong>Comparador de casas de apuestas</strong></li>
+                    </ul>
+                </article>
+                
+                <article class="servicio">
+                    <h3>Interacción y Comunidad</h3>
+                    <ul>
+                        <li><strong>Foros o secciones de comentarios</strong>
+                            <p>Para discutir partidos y apuestas.</p>
+                        </li>
+                        <li><strong>Perfiles de usuario</strong>
+                            <p>Con historial y estadísticas personalizadas.</p>
+                        </li>
+                        <li><strong>Sistema de logros o recompensas</strong>
+                            <p>Gamificación para una mejor experiencia.</p>
+                        </li>
+                        <li><strong>Notificaciones personalizadas</strong>
+                            <p>Por favoritos, cambios de cuotas, goles, etc.</p>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 GolESPE 360 - Tu portal de fútbol español</p>
+        <p>Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>
